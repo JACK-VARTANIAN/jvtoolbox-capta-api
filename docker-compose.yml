@@ -1,0 +1,47 @@
+version: "3.7"  # optional since v1.27.0
+services:
+  vpn:
+    container_name: vpn-container
+    image: dperson/openvpn-client
+    devices:
+      - "/dev/net/tun"
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./vpn:/vpn
+    cap_add: 
+      - NET_ADMIN
+
+  app:
+    container_name: capta-api-container
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:jvtoolbox.capta-api.com.br"
+    network_mode: service:vpn
+    build: ./capta-api
+    depends_on: 
+      - vpn
+    environment:
+    - USER_JV=${USER_JV}
+    - PASSWORD_JV=${PASSWORD_JV}
+    - SECRET_KEY=${SECRET_KEY}
+    - SERVER=${SERVER}
+    - DATABASE=${DATABASE}
+    - UID=${UID}
+    - PWDD=${PWDD}
+    volumes: 
+      - /capta-api
+    command:  gunicorn -w 3 --reload -b 0.0.0.0:8888 "app.main:start_app(testing=False)"
+    
+  reverse-proxy:
+    image: traefik:v2.2
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    
+    depends_on:
+      - vpn
+      - app

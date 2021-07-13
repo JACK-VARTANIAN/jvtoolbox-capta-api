@@ -4,9 +4,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /capta-api
-ADD app to /capta-api/
-ADD requirements.txt /capta-api/
+WORKDIR /code
+
+COPY . .
 
 RUN apt-get update \
   && apt-get -y install gcc gnupg2 \
@@ -21,4 +21,3 @@ RUN apt-get -y install unixodbc-dev \
   && apt-get -y install python-pip 
 
 RUN pip install -r requirements.txt
-

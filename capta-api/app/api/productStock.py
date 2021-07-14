@@ -27,7 +27,7 @@ class productStock(Resource):
                         AND b.mercs = 'PA'
                         AND f.dgrus <> 'MOD' 
                         AND RTRIM(c.rclis) = 'ESTOQUE VENDA'
-                        AND (RTRIM(a.cpros) = '{reference}'
+                        AND RTRIM(a.cpros) = '{reference}'
                 GROUP BY a.codtams, a.cpros, a.codtams, a.empos, c.rclis
                 """
 

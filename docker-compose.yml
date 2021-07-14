@@ -2,29 +2,29 @@ version: "3.9"  # optional since v1.27.0
 services:
   vpn:
     container_name: vpn-container
-    #build: ./openvpnclient
-    image: dperson/openvpn-client
+    image: jackvartanian/dperson-openvpnclient
+    #image: dperson/openvpn-client
     volumes:
-      - .:/vpn
+      - ./vpn:/vpn
     devices:
       - "/dev/net/tun"
     ports:
-      - "8888:8888"
+      - "8000:8000"
     cap_add: 
       - NET_ADMIN
-  app:
+
+  flask_app:
     container_name: capta-api-container
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.frontend.rule=Host:jvtoolbox.capta-api.com.br"
-
-    # depends_on:
-    #    - vpn
+    depends_on:
+       - vpn
     
-    # network_mode: service:vpn
+    network_mode: service:vpn
 
-    build: ./capta-api
-    
+    image: jackvartanian/capta-api
+
+    env_file: 
+      - .env
+
     environment:
     - USER_JV=${USER_JV}
     - PASSWORD_JV=${PASSWORD_JV}
@@ -34,18 +34,13 @@ services:
     - UID=${UID}
     - PWDD=${PWDD}
 
-    command: gunicorn -w 3 --reload -b 0.0.0.0:8888 "app.main:start_app(testing=False)" 
+    command: gunicorn -w 1 --reload -b 0.0.0.0:8000 app.wsgi:app 
     
     
-  # reverse-proxy:
-  #   image: traefik:v2.2
-  #   command: --api.insecure=true --providers.docker
-  #   ports:
-  #     - "80:80"
-  #     - "8080:8080" 
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-    
-  #   depends_on:
-  #     - vpn
-  #     - app
+  reverse-proxy:
+    container_name: reverse-proxy-container
+    image: jackvartanian/reverse-proxy
+    depends_on:
+      - flask_app
+    ports:
+      - "80:80"

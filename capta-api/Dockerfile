@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9 as build-stage
 
 ENV PYTHONDONTWRITEBYTECODE 1
 
@@ -21,3 +21,6 @@ RUN apt-get -y install unixodbc-dev \
   && apt-get -y install python-pip 
 
 RUN pip install -r requirements.txt
+
+# FROM nginx:latest as production-stage
+# COPY nginx.conf /etc/nginx/nginx.conf

@@ -298,7 +298,6 @@ The 'command' (if provided and valid) will be run instead of openvpn
 " >&2
     exit $RC
 }
-
 dir="/vpn"
 auth="$dir/vpn.auth"
 cert_auth="$dir/vpn.cert_auth"

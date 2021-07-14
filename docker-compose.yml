@@ -1,4 +1,4 @@
-version: "3.7"  # optional since v1.27.0
+version: "3.9"  # optional since v1.27.0
 services:
   vpn:
     container_name: vpn-container
@@ -15,7 +15,9 @@ services:
   api:
     container_name: capta-api-container
     network_mode: service:vpn
-    build: capta-api/
+    image: jackvartanian/capta-api
+    env_file: 
+      - .env
     environment:
     - USER_JV=${USER_JV}
     - PASSWORD_JV=${PASSWORD_JV}

@@ -5,9 +5,11 @@ from flask_restful import Resource
 from app.connection import connection
 
 class customerInfo(Resource):
+   def __init__(self, **kwargs):
+      self.conn=kwargs["conn"]
    @token_required
    def get(self, customer):
-      conn = connection()
+      conn = self.conn
       query = f"""
          SELECT a.iclis,
             a.rclis,

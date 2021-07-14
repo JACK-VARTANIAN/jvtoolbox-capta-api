@@ -4,9 +4,11 @@ from flask_restful import Resource
 from app.connection import connection 
 
 class productStock(Resource):
+    def __init__(self, **kwargs):
+        self.conn=kwargs["conn"]    
     @token_required
     def get(self, reference):
-        conn = connection()
+        conn = self.conn
         query = f"""
                 SELECT 
                 b.cpros,

@@ -21,6 +21,3 @@ RUN apt-get -y install unixodbc-dev \
   && apt-get -y install python-pip 
 
 RUN pip install -r requirements.txt
-
-# FROM nginx:latest as production-stage
-# COPY nginx.conf /etc/nginx/nginx.conf

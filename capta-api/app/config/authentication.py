@@ -2,6 +2,8 @@ import jwt
 from flask import request, jsonify, make_response
 from functools import wraps
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 USER_JV = os.getenv("USER_JV")
 PASSWORD_JV = os.getenv("PASSWORD_JV")

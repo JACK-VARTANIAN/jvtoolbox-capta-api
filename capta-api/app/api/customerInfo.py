@@ -1,8 +1,8 @@
 import json
 import pandas as pd
-from app.authentication import token_required
+from app.config.authentication import token_required
 from flask_restful import Resource
-from app.connection import connection
+from app.config.connection import connection
 
 class customerInfo(Resource):
    def __init__(self, **kwargs):

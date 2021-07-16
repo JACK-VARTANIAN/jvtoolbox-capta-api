@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 
-from app.authentication import token_required
+from app.config.authentication import token_required
 from flask_restful import Resource, request
 
 class productInfo(Resource):

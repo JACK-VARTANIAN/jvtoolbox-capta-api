@@ -2,10 +2,12 @@ import jwt
 import datetime
 import os
 
-from app.authentication import auth_required
+from app.config.authentication import auth_required
 from flask import jsonify
 from flask_restful import Resource, request
 
+from dotenv import load_dotenv
+load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 

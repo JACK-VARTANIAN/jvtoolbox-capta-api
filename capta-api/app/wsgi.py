@@ -1,9 +1,6 @@
-from app.config.settings import app
-from app.config.database.init_db import init_db
-
-def main():
-    init_db()
-    app.run(host='0.0.0.0', port=8080, debug=True)
+from main import app
+from database.init_db import init_db
 
 if __name__ == "__main__":
-    main()
+    #init_db()
+    app.run(host='0.0.0.0', port=3001, debug=True)

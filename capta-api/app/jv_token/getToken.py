@@ -2,7 +2,7 @@ import jwt
 import datetime
 import os
 
-from app.config.authentication import auth_required
+from config.authentication import auth_required
 from flask import jsonify
 from flask_restful import Resource, request
 

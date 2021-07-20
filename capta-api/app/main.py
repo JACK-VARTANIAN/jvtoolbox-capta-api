@@ -5,6 +5,8 @@ from flask_graphql import GraphQLView
 from schemas.products import schema
 from jv_token import getToken
 
+from config.connection import connection
+from database.init_db import init_db
 from database.db_session import db_session
 from dotenv import load_dotenv
 load_dotenv()
@@ -20,7 +22,7 @@ def shutdown_session(exception=None):
 
 @app.route("/")
 def index():
-   return 'Hello World'
+    return 'Hello World'
 
 app.add_url_rule(
     '/graphql',

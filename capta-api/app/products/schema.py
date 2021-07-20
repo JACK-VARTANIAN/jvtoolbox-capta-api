@@ -8,12 +8,12 @@ from .serializer import ProductsType
 
 class Query(graphene.ObjectType):
     products = SQLAlchemyConnectionField(ProductsType.connection)
-    product = graphene.Field(ProductsType, pk = graphene.String())
+    product = graphene.Field(ProductsType, cpros = graphene.String())
 
     @classmethod
     def resolve_products(cls, _, info, *args, **kwargs):
         return  Products.query.all()
 
     @classmethod
-    def resolve_products_by_cpros(cls, _, info, pk, *args, **kwargs):
-        return Products.query.filter_by(cpros=pk)
+    def resolve_products_by_cpros(cls, _, info, cpros):
+        return Products.query.filter_by(cpros=cpros)

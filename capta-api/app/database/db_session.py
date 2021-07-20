@@ -10,7 +10,6 @@ SERVER = os.getenv("SERVER")
 DATABASE = os.getenv("DATABASE")
 UID = os.getenv("UID")
 PWD = os.getenv("PWDD")
-
 params = urllib.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server};'
                             'SERVER=' + SERVER + ';'
                             'DATABASE=' + DATABASE + ';'
